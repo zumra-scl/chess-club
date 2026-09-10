@@ -92,9 +92,8 @@ app.post("/login", (req, res) => {
     return res.render("home", { user: null, error: null, attemptedName: "" });
   }
 
-  const hakusql = `SELECT * FROM kayttajat WHERE tunnus = '${tunnus}' AND salasana = '${salasana}'`;
-
-  db.all(hakusql, [], (err, results) => {
+  const hakusql = "SELECT * FROM kayttajat WHERE tunnus = ? AND salasana = ?";
+  db.all(hakusql, [tunnus, salasana], (err, results) => {
     if (err) {
       console.error("Virhe kirjautumisessa:", err);
       db.close();
