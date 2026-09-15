@@ -21,9 +21,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
+const sessionSecret = process.env.SESSION_SECRET;
+
+if (!sessionSecret) {
+  throw new Error("SESSION_SECRET ympäristömuuttuja puuttuu");
+}
+
 app.use(
   session({
-    secret: "injektiotehtava-secret-key",
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false },
