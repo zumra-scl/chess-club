@@ -201,17 +201,21 @@ app.get("/pelit", requireLogin, (req, res) => {
 
 app.get("/kayttajat", requireAdmin, (req, res) => {
   const db = connectDB();
-  db.all("SELECT * FROM kayttajat", [], (err, kayttajat) => {
-    db.close();
-    if (err) {
-      console.error("Virhe haettaessa käyttäjiä:", err);
-      return res.render("kayttajat", {
-        kayttajat: [],
-        error: res.locals.t.users.fetchError,
-      });
-    }
-    res.render("kayttajat", { kayttajat: kayttajat || [], error: null });
-  });
+  db.all(
+    "SELECT tunnus, sahkoposti, yllapitaja FROM kayttajat",
+    [],
+    (err, kayttajat) => {
+      db.close();
+      if (err) {
+        console.error("Virhe haettaessa käyttäjiä:", err);
+        return res.render("kayttajat", {
+          kayttajat: [],
+          error: res.locals.t.users.fetchError,
+        });
+      }
+      res.render("kayttajat", { kayttajat: kayttajat || [], error: null });
+    },
+  );
 });
 
 app.get("/tapahtumat", requireAdmin, (req, res) => {
