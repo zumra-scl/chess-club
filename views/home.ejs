@@ -9,7 +9,7 @@
 </form>
 
 <% if (attemptedName) { %>
-    <p><%= t.home.loginFailedPrefix %><%- attemptedName %><%= t.home.loginFailedSuffix %></p>
+    <p><%= t.home.loginFailedPrefix %><%= attemptedName %><%= t.home.loginFailedSuffix %></p>
 <% } %>
 
 <% if (error) { %>
