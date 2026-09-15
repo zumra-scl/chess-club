@@ -123,7 +123,15 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-  res.redirect(res.locals.p("/"));
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Virhe uloskirjautumisessa:", err);
+      return res.redirect(res.locals.p("/"));
+    }
+
+    res.clearCookie("connect.sid");
+    res.redirect(res.locals.p("/"));
+  });
 });
 
 app.get("/viestit", requireLogin, (req, res) => {
