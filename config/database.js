@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const createKayttajatSql = `CREATE TABLE IF NOT EXISTS kayttajat (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    tunnus TEXT NOT NULL,
+    tunnus TEXT NOT NULL UNIQUE,
     salasana TEXT NOT NULL,
     sahkoposti TEXT NOT NULL,
     yllapitaja INTEGER NOT NULL
