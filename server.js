@@ -154,7 +154,6 @@ app.post("/viestit", requireLogin, (req, res) => {
 
   const db = connectDB();
   const sql = "INSERT INTO viestit (nimi, viesti) VALUES (?, ?)";
-
   db.run(sql, [nimi, viesti], (err) => {
     db.close();
     if (err) {
