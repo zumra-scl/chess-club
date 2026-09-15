@@ -152,7 +152,7 @@ app.post("/login", (req, res) => {
   });
 });
 
-app.get("/logout", (req, res) => {
+app.post("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.error("Virhe uloskirjautumisessa:", err);
