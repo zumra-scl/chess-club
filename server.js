@@ -181,7 +181,7 @@ app.get("/pelit", requireLogin, (req, res) => {
   res.render("pelit");
 });
 
-app.get("/kayttajat", requireLogin, (req, res) => {
+app.get("/kayttajat", requireAdmin, (req, res) => {
   const db = connectDB();
   db.all("SELECT * FROM kayttajat", [], (err, kayttajat) => {
     db.close();
