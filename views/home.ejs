@@ -4,7 +4,7 @@
 
 <form action="<%= p('/login') %>" method="post">
     <p><label for="tunnus" class="fixed-width"><%= t.home.username %></label><input type="text" name="tunnus" id="tunnus"></p>
-    <p><label for="salasana" class="fixed-width"><%= t.home.password %></label><input type="text" name="salasana" id="salasana"></p>
+    <p><label for="salasana" class="fixed-width"><%= t.home.password %></label><input type="password" name="salasana" id="salasana"></p>
     <input type="submit" value="<%= t.home.submit %>">
 </form>
 
