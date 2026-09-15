@@ -196,7 +196,7 @@ app.get("/kayttajat", requireAdmin, (req, res) => {
   });
 });
 
-app.get("/tapahtumat", requireLogin, (req, res) => {
+app.get("/tapahtumat", requireAdmin, (req, res) => {
   const db = connectDB();
   db.all(
     "SELECT * FROM tapahtumat ORDER BY aikaleima DESC, id DESC",
