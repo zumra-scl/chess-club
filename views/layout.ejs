@@ -17,7 +17,9 @@
                         <li><a href="<%= p('/kayttajat') %>"><%= t.nav.users %></a></li>
                         <li><a href="<%= p('/tapahtumat') %>"><%= t.nav.events %></a></li>
                     <% } %>
-                    <li><a href="<%= p('/logout') %>"><%= t.nav.logout %></a></li>
+                    <form action="<%= p('/logout') %>" method="POST">
+                    <button type="submit">Logout</button>
+                    </form>
                 </ul>
             <% } %>
         </nav>
