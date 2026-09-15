@@ -115,19 +115,31 @@ app.post("/login", (req, res) => {
     }
 
     if (results && results.length > 0) {
-      req.session.user = {
-        id: results[0].id,
-        tunnus: results[0].tunnus,
-        yllapitaja: results[0].yllapitaja,
-      };
+      req.session.regenerate((err) => {
+        if (err) {
+          console.error("Virhe istunnon uusimisessa:", err);
+          db.close();
+          return res.render("home", {
+            user: null,
+            error: res.locals.t.home.loginError,
+            attemptedName: tunnus,
+          });
+        }
 
-      const tapahtumasql =
-        "INSERT INTO tapahtumat (aikaleima, kuvaus) VALUES (datetime('now'), ?)";
-      const kuvaus = `Käyttäjä ${results[0].tunnus} kirjautui sisään.`;
+        req.session.user = {
+          id: results[0].id,
+          tunnus: results[0].tunnus,
+          yllapitaja: results[0].yllapitaja,
+        };
 
-      db.run(tapahtumasql, [kuvaus], () => {
-        db.close();
-        res.redirect(res.locals.p("/viestit"));
+        const tapahtumasql =
+          "INSERT INTO tapahtumat (aikaleima, kuvaus) VALUES (datetime('now'), ?)";
+        const kuvaus = `Käyttäjä ${results[0].tunnus} kirjautui sisään.`;
+
+        db.run(tapahtumasql, [kuvaus], () => {
+          db.close();
+          res.redirect(res.locals.p("/viestit"));
+        });
       });
     } else {
       db.close();
