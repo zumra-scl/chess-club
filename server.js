@@ -105,7 +105,11 @@ app.post("/login", (req, res) => {
     }
 
     if (results && results.length > 0) {
-      req.session.user = results[0];
+      req.session.user = {
+        id: results[0].id,
+        tunnus: results[0].tunnus,
+        yllapitaja: results[0].yllapitaja,
+      };
       const tapahtumasql = `INSERT INTO tapahtumat (aikaleima, kuvaus) VALUES (datetime('now'), 'Käyttäjä ${results[0].tunnus} kirjautui sisään.')`;
       db.run(tapahtumasql, () => {
         db.close();
