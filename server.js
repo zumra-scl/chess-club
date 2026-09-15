@@ -183,6 +183,14 @@ app.post("/viestit", requireLogin, (req, res) => {
 
   if (!viesti) {
     return haeViestit((err, viestit) => {
+      if (err) {
+        console.error("Virhe haettaessa viestejä:", err);
+        return res.render("viestit", {
+          viestit: [],
+          error: res.locals.t.messages.fetchError,
+        });
+      }
+
       res.render("viestit", {
         viestit: viestit || [],
         error: res.locals.t.messages.empty,
