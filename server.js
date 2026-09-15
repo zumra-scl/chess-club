@@ -120,8 +120,12 @@ app.post("/login", (req, res) => {
         tunnus: results[0].tunnus,
         yllapitaja: results[0].yllapitaja,
       };
-      const tapahtumasql = `INSERT INTO tapahtumat (aikaleima, kuvaus) VALUES (datetime('now'), 'Käyttäjä ${results[0].tunnus} kirjautui sisään.')`;
-      db.run(tapahtumasql, () => {
+
+      const tapahtumasql =
+        "INSERT INTO tapahtumat (aikaleima, kuvaus) VALUES (datetime('now'), ?)";
+      const kuvaus = `Käyttäjä ${results[0].tunnus} kirjautui sisään.`;
+
+      db.run(tapahtumasql, [kuvaus], () => {
         db.close();
         res.redirect(res.locals.p("/viestit"));
       });
