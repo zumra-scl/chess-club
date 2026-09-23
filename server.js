@@ -1,6 +1,5 @@
 import express from "express";
 import session from "express-session";
-import bodyParser from "body-parser";
 import expressLayouts from "express-ejs-layouts";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -17,8 +16,8 @@ const PORT = process.env.PORT || 3000;
 
 initializeDB();
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static("public"));
 
 const sessionSecret = process.env.SESSION_SECRET;
