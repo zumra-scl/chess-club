@@ -73,7 +73,7 @@ function requireLogin(req, res, next) {
 }
 
 function requireAdmin(req, res, next) {
-  if (!req.session.user || req.session.user.yllapitaja != 1) {
+  if (!req.session.user || req.session.user.yllapitaja !== 1) {
     return res.redirect(res.locals.p("/"));
   }
   next();

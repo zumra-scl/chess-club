@@ -13,7 +13,7 @@
                 <ul>
                     <li><a href="<%= p('/viestit') %>"><%= t.nav.messages %></a></li>
                     <li><a href="<%= p('/pelit') %>"><%= t.nav.games %></a></li>
-                    <% if (user.yllapitaja == 1) { %>
+                    <% if (user.yllapitaja === 1) { %>
                         <li><a href="<%= p('/kayttajat') %>"><%= t.nav.users %></a></li>
                         <li><a href="<%= p('/tapahtumat') %>"><%= t.nav.events %></a></li>
                     <% } %>
