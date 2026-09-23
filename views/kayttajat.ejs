@@ -20,7 +20,7 @@
                 <tr>
                     <td><%= kayttaja.tunnus %></td>
                     <td><%= kayttaja.sahkoposti %></td>
-                    <td><%= kayttaja.yllapitaja == 1 ? t.users.admin : t.users.member %></td>
+                    <td><%= kayttaja.yllapitaja === 1 ? t.users.admin : t.users.member %></td>
                 </tr>
             <% }); %>
         </tbody>
