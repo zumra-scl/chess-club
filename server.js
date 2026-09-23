@@ -1,6 +1,7 @@
 import express from "express";
 import session from "express-session";
 import expressLayouts from "express-ejs-layouts";
+import bcrypt from "bcrypt";
 import path from "path";
 import { fileURLToPath } from "url";
 import { initializeDB, connectDB } from "./config/database.js";
@@ -101,8 +102,8 @@ app.post("/login", (req, res) => {
     return res.render("home", { user: null, error: null, attemptedName: "" });
   }
 
-  const hakusql = "SELECT * FROM kayttajat WHERE tunnus = ? AND salasana = ?";
-  db.all(hakusql, [tunnus, salasana], (err, results) => {
+  const hakusql = "SELECT * FROM kayttajat WHERE tunnus = ?";
+  db.all(hakusql, [tunnus], async (err, results) => {
     if (err) {
       console.error("Virhe kirjautumisessa:", err);
       db.close();
@@ -114,17 +115,21 @@ app.post("/login", (req, res) => {
     }
 
     if (results && results.length > 0) {
-      req.session.regenerate((err) => {
-        if (err) {
-          console.error("Virhe istunnon uusimisessa:", err);
-          db.close();
-          return res.render("home", {
-            user: null,
-            error: res.locals.t.home.loginError,
-            attemptedName: tunnus,
-          });
-        }
+      const user = results[0];
 
+      const passwordMatch = await bcrypt.compare(salasana, user.salasana);
+
+      if (!passwordMatch) {
+        db.close();
+
+        return res.render("home", {
+          user: null,
+          error: null,
+          attemptedName: tunnus,
+        });
+      }
+
+      req.session.regenerate((err) => {
         req.session.user = {
           id: results[0].id,
           tunnus: results[0].tunnus,
