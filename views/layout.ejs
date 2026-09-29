@@ -11,15 +11,16 @@
         <nav id="navi">
             <% if (user) { %>
                 <ul>
-                    <li><a href="<%= p('/viestit') %>"><%= t.nav.messages %></a></li>
-                    <li><a href="<%= p('/pelit') %>"><%= t.nav.games %></a></li>
-                    <% if (user.yllapitaja === 1) { %>
-                        <li><a href="<%= p('/kayttajat') %>"><%= t.nav.users %></a></li>
-                        <li><a href="<%= p('/tapahtumat') %>"><%= t.nav.events %></a></li>
+                <li><a href="<%= p('/viestit') %>"><%= t.nav.messages %></a></li>
+                <li><a href="<%= p('/pelit') %>"><%= t.nav.games %></a></li>
+                <% if (user.yllapitaja === 1) { %>
+                    <li><a href="<%= p('/kayttajat') %>"><%= t.nav.users %></a></li>
+                    <li><a href="<%= p('/tapahtumat') %>"><%= t.nav.events %></a></li>
                     <% } %>
-                    <form action="<%= p('/logout') %>" method="POST">
+                <form action="<%= p('/logout') %>" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button type="submit">Logout</button>
-                    </form>
+                </form>
                 </ul>
             <% } %>
         </nav>
