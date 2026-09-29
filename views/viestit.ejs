@@ -3,8 +3,12 @@
 <p><%= t.messages.intro %></p>
 
 <form action="<%= p('/viestit') %>" method="post">
+
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
     <p><label for="viesti"><%= t.messages.label %></label><br>
     <textarea name="viesti" id="viesti" rows="5" cols="40"></textarea></p>
+
     <input type="submit" value="<%= t.messages.submit %>">
 </form>
 
