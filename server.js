@@ -4,6 +4,7 @@ import rateLimit from "express-rate-limit";
 import expressLayouts from "express-ejs-layouts";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
+import helmet from "helmet";
 import path from "path";
 import { fileURLToPath } from "url";
 import { initializeDB, connectDB } from "./config/database.js";
@@ -22,6 +23,7 @@ initializeDB();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(helmet());
 app.use(express.static("public"));
 
 const sessionSecret = process.env.SESSION_SECRET;
