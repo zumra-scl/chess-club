@@ -1,5 +1,6 @@
 import express from "express";
 import session from "express-session";
+import rateLimit from "express-rate-limit";
 import expressLayouts from "express-ejs-layouts";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
@@ -49,6 +50,14 @@ app.use((req, res, next) => {
 
   res.locals.csrfToken = req.session.csrfToken;
   next();
+});
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: "Liian monta kirjautumisyritystä. Yritä myöhemmin uudelleen.",
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 app.set("view engine", "ejs");
@@ -125,7 +134,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.post("/login", requireCsrf, (req, res) => {
+app.post("/login", loginLimiter, requireCsrf, (req, res) => {
   const db = connectDB();
 
   const tunnus = req.body.tunnus || "";
